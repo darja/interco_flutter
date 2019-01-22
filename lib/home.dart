@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomeState();
-  }
+    @override
+    State<StatefulWidget> createState() {
+        return _HomeState();
+    }
 }
 
 class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-          appBar: AppBar(
-            title: Text("Interco"),
-          ),
-          bottomNavigationBar: BottomNavigationBar(items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list), title: Text("Reference")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.live_help), title: Text("Quiz")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_box),
-                title: Text("Statistics"))
-          ]),
-          body: Center(
-            child: Text("Hello there!"),
-          ),
+    int _selectedTabIndex = 0;
+    final List<Widget> _tabContent = [
+        Center(child: Text("Reference")),
+        Center(child: Text("Quiz")),
+        Center(child: Text("Statistics")),
+    ];
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(
+                title: Text("Interco"),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+                onTap: onTabSelected,
+                currentIndex: _selectedTabIndex,
+                items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.list), title: Text("Reference")),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.live_help), title: Text("Quiz")),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.account_box),
+                        title: Text("Statistics"))
+                ]),
+            body: _tabContent[_selectedTabIndex],
         );
-  }
+    }
+
+    void onTabSelected(int index) {
+        setState(() {
+            _selectedTabIndex = index;
+        });
+    }
 }
