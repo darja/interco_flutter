@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interco/ui/reference/reference.dart';
 
 class Home extends StatefulWidget {
     @override
@@ -10,7 +11,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
     int _selectedTabIndex = 0;
     final List<Widget> _tabContent = [
-        Center(child: Text("Reference")),
+        ReferenceWidget(),
         Center(child: Text("Quiz")),
         Center(child: Text("Statistics")),
     ];

@@ -10,7 +10,7 @@ class IntercoApp extends StatelessWidget {
         return MaterialApp(
             title: 'Interco',
             theme: ThemeData(
-                primarySwatch: Colors.blue,
+                primaryColor: Color.fromARGB(255, 21, 67, 96),
             ),
             home: Home(),
 

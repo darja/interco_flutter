@@ -1,0 +1,53 @@
+symbols:
+  - name: A
+    memo: Alpha
+  - name: B
+    memo: Bravo
+  - name: C
+    memo: Charlie
+  - name: D
+    memo: Delta
+  - name: E
+    memo: Eco
+  - name: F
+    memo: Foxtrot
+  - name: G
+    memo: Golf
+  - name: H
+    memo: Hotel
+  - name: I
+    memo: India
+  - name: J
+    memo: Juliet
+  - name: K
+    memo: Kilo
+  - name: L
+    memo: Lima
+  - name: M
+    memo: Mike
+  - name: N
+    memo: November
+  - name: O
+    memo: Oscar
+  - name: P
+    memo: Papa
+  - name: Q
+    memo: Quebec
+  - name: R
+    memo: Romeo
+  - name: S
+    memo: Sierra
+  - name: T
+    memo: Tango
+  - name: U
+    memo: Uniform
+  - name: V
+    memo: Victoria
+  - name: W
+    memo: Whiskey
+  - name: X
+    memo: X-Ray
+  - name: Y
+    memo: Yankee
+  - name: Z
+    memo: Zulu
