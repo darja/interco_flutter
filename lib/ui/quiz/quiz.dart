@@ -38,7 +38,7 @@ class _QuizWidgetState extends State<QuizWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                     Align(alignment: Alignment.topCenter, child: _buildQuestionWidget(),),
-                    Align(alignment: Alignment.bottomCenter, child: _buildAnswersListWidget(),)
+                    Align(alignment: Alignment.bottomCenter, child: _buildAnswersGridWidget(),)
 
                 ],
             )
@@ -62,6 +62,22 @@ class _QuizWidgetState extends State<QuizWidget> {
         return widget;
     }
 
+    Widget _buildAnswersGridWidget() {
+        var children = <Widget>[];
+        for (Symbol option in _question.options) {
+            children.add(_buildAnswerWidget(option, _question.answersField));
+        }
+
+        return Table(
+            defaultColumnWidth: FractionColumnWidth(.5),
+            defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
+            children: [
+                TableRow(children: [children[0], children[1]]),
+                TableRow(children: [children[2], children[3]])
+            ],
+        );
+    }
+
     Widget _buildAnswersListWidget() {
         var children = <Widget>[];
         for (Symbol option in _question.options) {
@@ -76,21 +92,25 @@ class _QuizWidgetState extends State<QuizWidget> {
     }
 
     Widget _buildAnswerWidget(Symbol symbol, SymbolField answerField) {
-        return ButtonTheme(
+
+        return Container(padding: EdgeInsets.all(4.0),
+            child:ButtonTheme(
             minWidth: double.infinity,
+
             child: RaisedButton(
                 child: Container(child:_buildAnswerButtonChild(symbol, answerField)),
                 color: Colors.amber,
+                padding: EdgeInsets.all(10.0),
                 onPressed: () {},
             ),
-        );
+        ));
     }
 
     Widget _buildAnswerButtonChild(Symbol symbol, SymbolField answerField) {
         Widget widget;
         switch (answerField) {
             case SymbolField.FLAG:
-                widget = Image.asset(symbol.imagePath, height: 40.0,);
+                widget = Image.asset(symbol.imagePath, height: 50.0,);
                 break;
             case SymbolField.NAME:
                 widget = Text(
