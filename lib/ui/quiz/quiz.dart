@@ -3,6 +3,7 @@ import 'package:interco/main.dart';
 import 'package:interco/model/question.dart';
 import 'package:interco/model/symbol.dart';
 import 'package:interco/services/QuizProvider.dart';
+import 'package:interco/ui/quiz/quiz_button.dart';
 
 class QuizWidget extends StatefulWidget {
     @override
@@ -17,11 +18,6 @@ class _QuizWidgetState extends State<QuizWidget> {
 
     var _nameTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0);
     var _memoTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0);
-    var _buttonTextStyle = TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w400
-    );
-
     @override
     Widget build(BuildContext context) {
         _quizProvider = getIt.get<QuizProvider>();
@@ -38,7 +34,11 @@ class _QuizWidgetState extends State<QuizWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                     Align(alignment: Alignment.topCenter, child: _buildQuestionWidget(),),
-                    Align(alignment: Alignment.bottomCenter, child: _buildAnswersGridWidget(),)
+                    Align(alignment: Alignment.bottomCenter,
+                        child: QuizButtonGroupWidget(options: _question.options,
+                            correctIndex: _question.correctIndex,
+                            field: _question.answersField,
+                        ),)
 
                 ],
             )
@@ -57,72 +57,6 @@ class _QuizWidgetState extends State<QuizWidget> {
                 break;
             case SymbolField.MEMO:
                 widget = Text(questionSymbol.memo, style: _memoTextStyle);
-                break;
-        }
-        return widget;
-    }
-
-    Widget _buildAnswersGridWidget() {
-        var children = <Widget>[];
-        for (Symbol option in _question.options) {
-            children.add(_buildAnswerWidget(option, _question.answersField));
-        }
-
-        return Table(
-            defaultColumnWidth: FractionColumnWidth(.5),
-            defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
-            children: [
-                TableRow(children: [children[0], children[1]]),
-                TableRow(children: [children[2], children[3]])
-            ],
-        );
-    }
-
-    Widget _buildAnswersListWidget() {
-        var children = <Widget>[];
-        for (Symbol option in _question.options) {
-            children.add(_buildAnswerWidget(option, _question.answersField));
-        }
-
-        var col = Column(
-            children: children,
-        );
-
-        return col;
-    }
-
-    Widget _buildAnswerWidget(Symbol symbol, SymbolField answerField) {
-
-        return Container(padding: EdgeInsets.all(4.0),
-            child:ButtonTheme(
-            minWidth: double.infinity,
-
-            child: RaisedButton(
-                child: Container(child:_buildAnswerButtonChild(symbol, answerField)),
-                color: Colors.amber,
-                padding: EdgeInsets.all(10.0),
-                onPressed: () {},
-            ),
-        ));
-    }
-
-    Widget _buildAnswerButtonChild(Symbol symbol, SymbolField answerField) {
-        Widget widget;
-        switch (answerField) {
-            case SymbolField.FLAG:
-                widget = Image.asset(symbol.imagePath, height: 50.0,);
-                break;
-            case SymbolField.NAME:
-                widget = Text(
-                    symbol.name,
-                    style: _buttonTextStyle,
-                );
-                break;
-            case SymbolField.MEMO:
-                widget = Text(
-                    symbol.memo,
-                    style: _buttonTextStyle,
-                );
                 break;
         }
         return widget;
