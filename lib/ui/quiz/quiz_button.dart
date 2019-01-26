@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:interco/model/question.dart';
-import 'package:interco/model/symbol.dart';
 
 class QuizButtonGroupWidget extends StatefulWidget {
-    final List<Symbol> options;
-    final int correctIndex;
-    final SymbolField field;
+    final int itemsCount;
+    final Function itemBuilder;
+    final Function answerHighlighter;
+    final Function onAnswerSelected;
 
-    QuizButtonGroupWidget({Key key, this.options, this.correctIndex, this.field}) : super(key: key);
+    QuizButtonGroupWidget({Key key,
+        @required this.itemsCount,
+        @required this.itemBuilder,
+        @required this.answerHighlighter,
+        @required this.onAnswerSelected}) : super(key: key);
 
     @override
     State<StatefulWidget> createState() {
+        debugPrint("CreateState");
         return QuizButtonGroupWidgetState();
     }
 }
@@ -18,13 +22,10 @@ class QuizButtonGroupWidget extends StatefulWidget {
 class QuizButtonGroupWidgetState extends State<QuizButtonGroupWidget> {
     var buttonColors;
 
-    static const _nameTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0);
-    static const _memoTextStyle = TextStyle(fontSize: 16.0);
-
     @override
     void initState() {
         super.initState();
-        buttonColors = List.generate(widget.options.length, (it) => Colors.amber);
+        debugPrint("InitState");
     }
 
     @override
@@ -34,64 +35,42 @@ class QuizButtonGroupWidgetState extends State<QuizButtonGroupWidget> {
 
     _buildAnswersGridWidget() {
         var children = _createChildren();
+        List<TableRow> rows = [];
+        for (int i = 0; i < children.length; i += 2) {
+            rows.add(TableRow(
+                children: [children[i], children[i + 1]]
+            ));
+        }
 
         return Table(
             defaultColumnWidth: FractionColumnWidth(.5),
             defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
-            children: [
-                TableRow(children: [children[0], children[1]]),
-                TableRow(children: [children[2], children[3]])
-            ],
+            children: rows,
         );
     }
 
 
     _createChildren() {
         var children = <Widget>[];
-        for (int i = 0; i < widget.options.length; ++i) {
-            children.add(_buildButton(widget.options[i], i));
+        for (int i = 0; i < widget.itemsCount; ++i) {
+            children.add(_buildButton(i));
         }
         return children;
     }
 
-    _buildButton(Symbol symbol, int index) {
-        debugPrint("Build button $index");
+    _buildButton(int index) {
         return Container(padding: EdgeInsets.all(4.0),
             child:ButtonTheme(
                 minWidth: double.infinity,
 
                 child: RaisedButton(
-                    child: Container(child:_buildAnswerButtonChild(symbol)),
-                    color: buttonColors[index],
+                    child: Container(child:widget.itemBuilder(index)),
+                    color: widget.answerHighlighter(index),
                     padding: EdgeInsets.all(10.0),
                     onPressed: () {
-                        debugPrint("onPressed");
-                        setState(() {
-                            buttonColors[widget.correctIndex] = Colors.green;
-                            if (index != widget.correctIndex) {
-                                buttonColors[index] = Colors.red;
-                            }
-                        });
+                        widget.onAnswerSelected(index);
                     },
                 ),
             ));
     }
-
-    _buildAnswerButtonChild(Symbol symbol) {
-        switch (widget.field) {
-            case SymbolField.FLAG:
-                return Image.asset(symbol.imagePath, height: 50.0,);
-            case SymbolField.NAME:
-                return Text(
-                    symbol.name,
-                    style: _nameTextStyle,
-                );
-            case SymbolField.MEMO:
-                return Text(
-                    symbol.memo,
-                    style: _memoTextStyle,
-                );
-        }
-    }
-
 }
