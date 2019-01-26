@@ -17,6 +17,10 @@ class _QuizWidgetState extends State<QuizWidget> {
 
     var _nameTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0);
     var _memoTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0);
+    var _buttonTextStyle = TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.w400
+    );
 
     @override
     Widget build(BuildContext context) {
@@ -28,11 +32,16 @@ class _QuizWidgetState extends State<QuizWidget> {
     }
 
     Widget _buildBody() {
-        return Column(
-            children: <Widget>[
-                _buildQuestionWidget(),
-                _buildAnswersListWidget()
-            ],
+        return Container(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                    Align(alignment: Alignment.topCenter, child: _buildQuestionWidget(),),
+                    Align(alignment: Alignment.bottomCenter, child: _buildAnswersListWidget(),)
+
+                ],
+            )
         );
     }
 
@@ -41,7 +50,7 @@ class _QuizWidgetState extends State<QuizWidget> {
         Widget widget;
         switch (_question.questionField) {
             case SymbolField.FLAG: 
-                widget = Image.asset(questionSymbol.imagePath, height: 50.0,);
+                widget = Image.asset(questionSymbol.imagePath, height: 100.0,);
                 break;
             case SymbolField.NAME:
                 widget = Text(questionSymbol.name, style: _nameTextStyle);
@@ -67,9 +76,13 @@ class _QuizWidgetState extends State<QuizWidget> {
     }
 
     Widget _buildAnswerWidget(Symbol symbol, SymbolField answerField) {
-        return FlatButton(
-            child: _buildAnswerButtonChild(symbol, answerField),
-            onPressed: () {},
+        return ButtonTheme(
+            minWidth: double.infinity,
+            child: RaisedButton(
+                child: Container(child:_buildAnswerButtonChild(symbol, answerField)),
+                color: Colors.amber,
+                onPressed: () {},
+            ),
         );
     }
 
@@ -80,10 +93,16 @@ class _QuizWidgetState extends State<QuizWidget> {
                 widget = Image.asset(symbol.imagePath, height: 40.0,);
                 break;
             case SymbolField.NAME:
-                widget = Text(symbol.name);
+                widget = Text(
+                    symbol.name,
+                    style: _buttonTextStyle,
+                );
                 break;
             case SymbolField.MEMO:
-                widget = Text(symbol.memo);
+                widget = Text(
+                    symbol.memo,
+                    style: _buttonTextStyle,
+                );
                 break;
         }
         return widget;
