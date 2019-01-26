@@ -62,6 +62,7 @@ class _ReferenceWidgetState extends State<ReferenceWidget> {
                                 symbol.memo,
                                 style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
                             ),
+                            trailing: Image.asset(symbol.getImagePath(), height: 30.0,),
                         ),
                     ],
                 ),

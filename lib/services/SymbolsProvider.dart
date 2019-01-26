@@ -18,7 +18,7 @@ class SymbolsProvider {
             );
             _symbols.add(symbol);
         }
-        debugPrint("Just loaded symbols: ${_symbols.length}");
+        debugPrint("Loaded symbols from file: ${_symbols.length}");
     }
 
     List<Symbol> getSymbols() {

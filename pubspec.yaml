@@ -21,3 +21,4 @@ flutter:
 
   assets:
     - symbols.yml
+    - assets/flags/

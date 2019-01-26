@@ -7,4 +7,8 @@ class Symbol {
         @required this.name,
         @required this.memo
     });
+
+    String getImagePath() {
+        return "assets/flags/${name.toLowerCase()}.png";
+    }
 }
