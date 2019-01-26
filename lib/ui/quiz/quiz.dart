@@ -49,7 +49,7 @@ class _QuizWidgetState extends State<QuizWidget> {
                     Align(alignment: Alignment.bottomCenter,
                         child: QuizButtonGroupWidget(
                             itemsCount: _question.options.length,
-                            itemBuilder: (i) => _buildAnswerButtonContent,
+                            itemBuilder: _buildAnswerButtonContent,
                             answerHighlighter: _answerHighlighter,
                             onAnswerSelected: (index) => onAnswerSelected(index)
                         ),)
