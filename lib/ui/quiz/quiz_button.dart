@@ -18,10 +18,8 @@ class QuizButtonGroupWidget extends StatefulWidget {
 class QuizButtonGroupWidgetState extends State<QuizButtonGroupWidget> {
     var buttonColors;
 
-    static const _buttonTextStyle = TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w400
-    );
+    static const _nameTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0);
+    static const _memoTextStyle = TextStyle(fontSize: 16.0);
 
     @override
     void initState() {
@@ -86,12 +84,12 @@ class QuizButtonGroupWidgetState extends State<QuizButtonGroupWidget> {
             case SymbolField.NAME:
                 return Text(
                     symbol.name,
-                    style: _buttonTextStyle,
+                    style: _nameTextStyle,
                 );
             case SymbolField.MEMO:
                 return Text(
                     symbol.memo,
-                    style: _buttonTextStyle,
+                    style: _memoTextStyle,
                 );
         }
     }
