@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interco/home.dart';
 import 'package:get_it/get_it.dart';
+import 'package:interco/services/QuizProvider.dart';
 import 'package:interco/services/SymbolsProvider.dart';
 import 'dart:async';
 
@@ -10,9 +11,14 @@ void main() => runApp(IntercoApp());
 class IntercoApp extends StatelessWidget {
     Future<int> appStartup(BuildContext context) async {
         debugPrint("Loading");
+
         var symbolsProvider = new SymbolsProvider();
-        symbolsProvider.init(DefaultAssetBundle.of(context));
+        await symbolsProvider.init(DefaultAssetBundle.of(context));
         getIt.registerSingleton<SymbolsProvider>(symbolsProvider);
+
+        var quizProvider = new QuizProvider(symbols: symbolsProvider.getSymbols());
+        getIt.registerSingleton<QuizProvider>(quizProvider);
+
         debugPrint("End Loading");
 
         return 1;

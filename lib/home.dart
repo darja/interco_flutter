@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interco/ui/quiz/quiz.dart';
 import 'package:interco/ui/reference/reference.dart';
 
 class Home extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HomeState extends State<Home> {
     int _selectedTabIndex = 0;
     final List<Widget> _tabContent = [
         ReferenceWidget(),
-        Center(child: Text("Quiz")),
+        QuizWidget(),
         Center(child: Text("Statistics")),
     ];
 
