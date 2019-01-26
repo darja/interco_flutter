@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interco/services/SymbolsProvider.dart';
 import 'package:interco/model/symbol.dart';
+import 'package:interco/main.dart';
 
 class ReferenceWidget extends StatefulWidget {
     @override
@@ -10,19 +11,13 @@ class ReferenceWidget extends StatefulWidget {
 }
 
 class _ReferenceWidgetState extends State<ReferenceWidget> {
-    var symbolsProvider = SymbolsProvider();
+    SymbolsProvider _symbolsProvider;
 
     @override
     void initState() {
         super.initState();
-        _loadSymbols();
-    }
-
-    _loadSymbols() async {
-        await symbolsProvider.init(DefaultAssetBundle.of(context));
         setState(() {
-            var symbols = symbolsProvider.getSymbols();
-            debugPrint("Loaded symbols: ${symbols.length}");
+            _symbolsProvider = getIt.get<SymbolsProvider>();
         });
     }
 
@@ -37,13 +32,13 @@ class _ReferenceWidgetState extends State<ReferenceWidget> {
     Widget _buildBody(BuildContext context) {
         return ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: symbolsProvider.getSymbols().length,
+            itemCount: _symbolsProvider.getSymbols().length,
             itemBuilder: _buildSymbolItem
         );
     }
 
     Widget _buildSymbolItem(BuildContext context, int index) {
-        Symbol symbol = symbolsProvider.getSymbol(index);
+        Symbol symbol = _symbolsProvider.getSymbol(index);
 
         return new Container(
             margin: const EdgeInsets.only(top: 8.0),
@@ -62,7 +57,7 @@ class _ReferenceWidgetState extends State<ReferenceWidget> {
                                 symbol.memo,
                                 style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
                             ),
-                            trailing: Image.asset(symbol.getImagePath(), height: 30.0,),
+                            trailing: Image.asset(symbol.imagePath, height: 30.0,),
                         ),
                     ],
                 ),
